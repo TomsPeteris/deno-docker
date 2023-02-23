@@ -1,22 +1,12 @@
-import { http } from './deps.ts';
+import 'https://deno.land/std@0.177.0/dotenv/load.ts';
 
-const handler = async (request: Request): Promise<Response> => {
-	const resp = await fetch('https://api.github.com/users/denoland', {
-		// The init object here has an headers object containing a
-		// header that indicates what type of response we accept.
-		// We're not specifying the method field since by default
-		// fetch makes a GET request.
-		headers: {
-			accept: 'application/json',
-		},
-	});
+import { Application } from './deps.ts';
+import { environmentConfig } from './config/_index.ts';
 
-	return new Response(resp.body, {
-		status: resp.status,
-		headers: {
-			'content-type': 'application/json',
-		},
-	});
-};
+const app = new Application();
 
-http.serve(handler);
+app.use((ctx) => {
+	ctx.response.body = 'Hello World!';
+});
+
+await app.listen(environmentConfig[Deno.env.get('environment') || 'default']);

@@ -1,1 +1,4 @@
-export * as http from 'https://deno.land/std@0.157.0/http/server.ts';
+export { Application } from 'https://deno.land/x/oak/mod.ts';
+
+// Types
+export type { ListenOptions } from 'https://deno.land/x/oak/mod.ts';
